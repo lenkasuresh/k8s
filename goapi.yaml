@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-deployment
+  namespace: flinks
+  labels:
+    app: goapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: goapi
+  template:
+    metadata:
+      labels:
+        app: goapi
+    spec:
+      containers:
+      - name: goapi
+        image: lenkasureshkumar555/gorestapi:v1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goapi-service
+  namespace: flinks
+spec:
+  selector:
+    app: goapi
+  ports:
+    - protocol: TCP
+      port: 80
